@@ -25,6 +25,8 @@ class Venue implements Serializable {
 
     }
 
+    //moving to subclass removes the spurious table, but no location.id is generated and
+    //tests still fail
     static class GeoAddress {
 
         String addressLine1
