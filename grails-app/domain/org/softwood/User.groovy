@@ -3,7 +3,7 @@ package org.softwood
 
 import java.time.LocalDate
 
-class User {
+class User implements Serializable {
 
     String username
     String password
@@ -23,8 +23,21 @@ class User {
     }
 
     static mapping = {
+        sort "username" //default sort on username
         //when querying posts via from Users define the sort oder for the posts Collection via relationship
         //name the collection, field to sort by on that entity, and the order
         posts sort: 'dateCreated', order:'desc'
+    }
+
+    boolean isTransient () {
+        if (id == null)
+            true
+        else
+            false
+    }
+
+    String toString() {
+        def state = (isTransient()) ? "transient" : "persisted"
+        "$username[$state]"
     }
 }

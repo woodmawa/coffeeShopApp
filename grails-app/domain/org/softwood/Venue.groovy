@@ -2,7 +2,7 @@ package org.softwood
 
 import java.time.LocalDate
 
-class Venue {
+class Venue implements Serializable {
 
     String name
     LocalDate dateCreated
@@ -11,7 +11,6 @@ class Venue {
     GeoAddress location
     Collection posts
 
-    //static hasOne = [location:GeoAddress]   //, temp:TempLocation
     static hasMany = [posts:Post]           //but doesn't really own thats with user
     static embedded =['location']
 
@@ -24,33 +23,33 @@ class Venue {
         location cascade: "all-delete-orphan", lazy:false, unique:true  //eager fetch strategy
         posts    sorted: "desc", cascade:"save-update"
 
-        //comment out for now
-        //posts joinTable: [name:"venue_posts", key:"venue_id", column:"posts", type:Post]
+    }
+
+    static class GeoAddress {
+
+        String addressLine1
+        String addressLine2
+        String addressLine3
+        String town
+        String county
+        String country = "UK"
+        String postcode
+
+        //adds addTo/removeFrom methods to venue
+        static belongsTo = Venue
+
+        static constraints = {
+            addressLine1 nullable:true
+            addressLine2 nullable:true
+            addressLine3 nullable:true
+            town         nullable:true
+            county       nullable:true
+            country      nullable:true
+            postcode     nullable:true,
+                    matches: /^([gG][iI][rR] {0,}0[aA]{2})|([a-pr-uwyzA-PR-UWYZ](([0-9](([0-9]|[a-hjkstuwA-HJKSTUW])?)?)|([a-hk-yA-HK-Y][0-9]([0-9]|[abehmnprvwxyABEHMNPRVWXY])?)) ?[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2})$/
+        }
     }
 }
 
 
-class GeoAddress {
 
-    String addressLine1
-    String addressLine2
-    String addressLine3
-    String town
-    String county
-    String country = "UK"
-    String postcode
-
-    //adds addTo/removeFrom methods to venue
-    static belongsTo = Venue
-
-    static constraints = {
-        addressLine1 nullable:true
-        addressLine2 nullable:true
-        addressLine3 nullable:true
-        town         nullable:true
-        county       nullable:true
-        country      nullable:true
-        postcode     nullable:true,
-                     matches: /^([gG][iI][rR] {0,}0[aA]{2})|([a-pr-uwyzA-PR-UWYZ](([0-9](([0-9]|[a-hjkstuwA-HJKSTUW])?)?)|([a-hk-yA-HK-Y][0-9]([0-9]|[abehmnprvwxyABEHMNPRVWXY])?)) ?[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2})$/
-    }
-}

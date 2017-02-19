@@ -15,7 +15,7 @@ enum StarRating {
     }
 }
 
-class Rating {
+class Rating implements Serializable {
 
     StarRating stars
     Post post

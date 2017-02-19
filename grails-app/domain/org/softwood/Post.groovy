@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.concurrent.ConcurrentHashMap
 
-class Post {
+class Post implements Serializable {
 
     Map comments
     User user

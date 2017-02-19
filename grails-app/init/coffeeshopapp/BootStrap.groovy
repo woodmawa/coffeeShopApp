@@ -32,7 +32,7 @@ class BootStrap {
             println "saved user u, with username Will"
         }
         Venue v = new Venue (name:"home",
-                location: new GeoAddress (addressLine1:"10 South Close",
+                location: new Venue.GeoAddress (addressLine1:"10 South Close",
                 country: "UK",
                 county: "Suffolk",
                 postcode: "IP4 2TH")

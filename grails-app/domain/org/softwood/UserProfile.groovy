@@ -1,7 +1,7 @@
 package org.softwood
 
 
-class UserProfile {
+class UserProfile implements Serializable {
 
     String fullname
     String nickname

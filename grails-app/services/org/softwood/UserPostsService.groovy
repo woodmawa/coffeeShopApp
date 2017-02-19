@@ -32,12 +32,9 @@ class UserPostsService {
         comments.put (tag, value)  //[tag, value]
         Post newPost = new Post (comments: comments, rating:new Rating (stars:starRating))
         user.addToPosts (newPost)
-        user.save()
-        if (user.hasErrors()){
-            println "couldnt save post on user ${newPost.errors}"
-            return null
-        } else
-            return newPost    }
+        user.save(failOnError:true)
+        return newPost
+    }
 
     //comments map may have 0..m comment entries
     def createUserPost (User user, Map comments, StarRating starRating = StarRating.None, String description = null) {
@@ -52,12 +49,8 @@ class UserPostsService {
         Post newPost = new Post (comments: comments, rating:new Rating (stars:starRating))
         assert newPost.comments
         user.addToPosts (newPost)
-        user.save()
-        if (user.hasErrors()){
-            println "couldnt save post on user ${user.errors}"
-            return null
-        } else
-            return newPost
+        user.save(failOnError:true)
+        return newPost
     }
 
     def createUserPost (User user, Post post) {
@@ -72,7 +65,7 @@ class UserPostsService {
         if (!post.comments)
             post.comments = new HashMap()
         user.addToPosts (post)
-        user.save()
+        user.save(failOnError:true)
         return post
     }
 
@@ -82,8 +75,7 @@ class UserPostsService {
         }
         post.comments << comments
         post.description = description
-        post.save()
-        assert !post.hasErrors()
+        post.save(failOnError:true)
         return post
     }
 
@@ -94,8 +86,7 @@ class UserPostsService {
         }
         assert post.user
         post.rating.stars = starRating
-        post.save()
-        assert !post.hasErrors()
+        post.save(failOnError:true)
         return post
     }
 
@@ -106,8 +97,7 @@ class UserPostsService {
         }
         assert post.user
         post.description = description
-        post.save()
-        assert !post.hasErrors()
+        post.save(failOnError:true)
         return post
     }
 }

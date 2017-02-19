@@ -33,7 +33,7 @@ class VenueIntegrationSpec extends Specification {
     //original test -  this fails, have to explicitly delete loc to make it work
     void "test venue with an address" () {
         when: "create a venue and an address using transitive save on embedded "
-            GeoAddress address = new GeoAddress (addressLine1: "myhouse", town: "Ipswich", county: "suffolk", postcode : "IP4 2TH")
+            Venue.GeoAddress address = new Venue.GeoAddress (addressLine1: "myhouse", town: "Ipswich", county: "suffolk", postcode : "IP4 2TH")
 
             //address.save()
             Venue v = new Venue (name: "bistro", location: address)
@@ -41,7 +41,7 @@ class VenueIntegrationSpec extends Specification {
 
         then: "retrieve venue and check its location loaded eagerly "
             Venue lookupVenue = Venue.get(v.id)
-            GeoAddress loc = lookupVenue.location
+            Venue.GeoAddress loc = lookupVenue.location
             loc.postcode == "IP4 2TH"
             loc.town == "Ipswich"
 
@@ -52,46 +52,27 @@ class VenueIntegrationSpec extends Specification {
             if (v.hasErrors())
                 println "errors: $v.errors"
 
-            GeoAddress lookupLoc = GeoAddress.get (loc.id)
+            Venue.GeoAddress lookupLoc = Venue.GeoAddress.get (loc.id)
 
         then: "address should disppear"
             Venue.get (v.id) == null
-            GeoAddress.findAll().size() == 0
+            Venue.GeoAddress.findAll().size() == 0
             lookupLoc == null
     }
 
-    //new test - external entity - works
-    /*void "test with tempLocation" () {
-        when: ""
-            TempLocation temp = new TempLocation(name:"will")
-            Venue v = new Venue (name: "bistro", temp: temp)
-            assert v.save(flush:true)
-
-            Venue lookupVenue = Venue.get(v.id)
-
-            TempLocation t = lookupVenue.temp
-            assert t.name == "will"
-
-            //try delete
-            v.delete (flush:true)
-
-
-        then : " retrieve temp"
-            TempLocation.findAll().size() == 0
-    }*/
 
     //new test - reuse embedded  entity - works
     void "test with GeoLocation" () {
         when: ""
 
-        GeoAddress a = new GeoAddress(town:"ipswich")
+        Venue.GeoAddress a = new Venue.GeoAddress(town:"ipswich")
         //a.save() //causes test to fail
         Venue v = new Venue (name: "bistro", location: a)
         assert v.save(flush:true)
 
         Venue lookupVenue = Venue.get(v.id)
 
-        GeoAddress ta = lookupVenue.location
+        Venue.GeoAddress ta = lookupVenue.location
         assert ta.town == "ipswich"
 
         //try delete
@@ -99,6 +80,6 @@ class VenueIntegrationSpec extends Specification {
 
 
         then : " retrieve temp"
-        GeoAddress.findAll().size() == 0
+        Venue.GeoAddress.findAll().size() == 0
     }
 }
