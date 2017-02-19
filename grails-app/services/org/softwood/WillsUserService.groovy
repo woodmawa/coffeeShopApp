@@ -3,21 +3,21 @@ package org.softwood
 import grails.transaction.Transactional
 
 @Transactional
-class UserService {
+class WillsUserService {
 
     //TODO all security role/model stuff to do properly
     def getUserByName(String username, exactMatch=false) {
-        User u
+        WillsUser u
         if (!exactMatch)
-            u = User.findByUsernameLike ("%$username%")
+            u = WillsUser.findByUsernameLike ("%$username%")
         else
-            u = User.findByUsername (username)
+            u = WillsUser.findByUsername (username)
 
         return u
     }
 
 
-    def resetUserPassword (User user, password) {
+    def resetUserPassword (WillsUser user, password) {
         if (!user.isAttached) {
             user.attach()
         }
@@ -33,7 +33,7 @@ class UserService {
 
     }
 
-    def updateUserProfile (User user, Map bindingProfile){
+    def updateUserProfile (WillsUser user, Map bindingProfile){
         assert bindingProfile
 
         if (!user.isAttached) {
@@ -41,7 +41,7 @@ class UserService {
         }
 
         if (!user.profile) {
-            UserProfile profile = new UserProfile (bindingProfile)
+            WillsUserProfile profile = new WillsUserProfile (bindingProfile)
             user.addToProfile(profile)
         }
         else {

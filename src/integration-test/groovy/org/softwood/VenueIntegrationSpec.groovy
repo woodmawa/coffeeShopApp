@@ -74,10 +74,11 @@ class VenueIntegrationSpec extends Specification {
 
         Venue.GeoAddress ta = lookupVenue.location
         assert ta.town == "ipswich"
+        def locList = Venue.GeoAddress.get(1)
+        def tloc = locList[0]
 
         //try delete
         v.delete (flush:true)
-
 
         then : " retrieve temp"
         Venue.GeoAddress.findAll().size() == 0

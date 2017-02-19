@@ -1,13 +1,11 @@
 package org.softwood
 
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.concurrent.ConcurrentHashMap
 
 class Post implements Serializable {
 
     Map comments
-    User user
+    WillsUser user
     Venue venue
     String description
     Rating rating       //should this be an enum?
@@ -15,7 +13,7 @@ class Post implements Serializable {
     LocalDateTime dateCreated
     LocalDateTime lastUpdated
 
-    static belongsTo = [user:User]
+    static belongsTo = [user:WillsUser]
     static hasOne = [rating:Rating]
 
     static constraints = {

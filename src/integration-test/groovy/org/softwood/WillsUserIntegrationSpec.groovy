@@ -7,7 +7,7 @@ import spock.lang.*
 
 @Integration
 @Rollback
-class UserIntegrationSpec extends Specification {
+class WillsUserIntegrationSpec extends Specification {
 
     def setup() {
     }
@@ -18,18 +18,18 @@ class UserIntegrationSpec extends Specification {
     void "create user"() {
 
         when: "we create a user and save them"
-            User u = new User (username: "will")
+            WillsUser u = new WillsUser (username: "will")
             u.save (flush:true, failOnError:true)
 
         then:"check no errors"
             u.errors.errorCount  == 0
             u.id != 0
-            User.get (u.id).username == "will"
+            WillsUser.get (u.id).username == "will"
     }
 
     void "check basic validations " () {
         given : "new user"
-        User u = new User (username:"wil")  //too few chars
+        WillsUser u = new WillsUser (username:"wil")  //too few chars
 
         when: "we validate "
         u.validate()
@@ -41,15 +41,15 @@ class UserIntegrationSpec extends Specification {
     
     void "create two users with same name "() {
         when: "create two users with same username and save them "
-        User u1 = new User (username:"will")
+        WillsUser u1 = new WillsUser (username:"will")
         u1.save (flush:true)
-        User u2 = new User (username: "will")
+        WillsUser u2 = new WillsUser (username: "will")
         u2.save(flush:true)
 
         then: "second save will fail "
         u1.errors.errorCount == 0
         u1.id != null
-        User.get (u1.id).username == "will"
+        WillsUser.get (u1.id).username == "will"
 
         u2.hasErrors()
         u2.id == null

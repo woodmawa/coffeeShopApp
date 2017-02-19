@@ -17,7 +17,7 @@ class PostIntegrationSpecSpec extends Specification {
 
     void "test create user and some posts"() {
         given:"a user... "
-            User u = new User (username:'will')
+            WillsUser u = new WillsUser (username:'will')
             u.save(flush:true, failOnError:true)
 
         when: "create a post for user "
@@ -31,7 +31,7 @@ class PostIntegrationSpecSpec extends Specification {
             u.save(flush:true)
             if ( u.hasErrors())
                 println "error saving posts on user u : ${u.errors}"
-            List<Post> lookupPosts = User.get (u.id).posts
+            List<Post> lookupPosts = WillsUser.get (u.id).posts
             lookupPosts.each {println "query via user > $it.dateCreated : $it.comments" }
 
             Post.findAll().each {println "query from Post > $it.dateCreated : $it.comments"}
@@ -47,11 +47,11 @@ class PostIntegrationSpecSpec extends Specification {
 
     void "test query"() {
         given:"a user and where query for users, and posts "
-        User u
+        WillsUser u
 
         when: "create a post for user "
-        User.withNewSession { session ->
-            u = new User(username: 'will')
+        WillsUser.withNewSession { session ->
+            u = new WillsUser(username: 'will')
             u.save(flush: true, failOnError: true)
             Post p1 = new Post(comments: [food: "bought coffee and cake "])
             Post p2 = new Post(comments: [dinner: "bought wine and dinner"])
@@ -64,7 +64,7 @@ class PostIntegrationSpecSpec extends Specification {
                 println "error saving posts on user u : ${u.errors}"
 
 
-            def postList = User.get(u.id).posts
+            def postList = WillsUser.get(u.id).posts
             postList.each { println "query via user.list using same session > $it.dateCreated : $it.comments" }
 
             Post.findAll().each { println "query via Post using same session > $it.dateCreated : $it.comments" }
@@ -73,8 +73,8 @@ class PostIntegrationSpecSpec extends Specification {
         //because still in same session it just returns the order from the 1st level cache - so force a
         //new session and let the DB do the sort
         def lookupPosts
-        User.withNewSession{ session ->
-            User uNew  = User.get(u.id)
+        WillsUser.withNewSession{ session ->
+            WillsUser uNew  = WillsUser.get(u.id)
             assert uNew
             lookupPosts = uNew.posts
 
@@ -93,11 +93,11 @@ class PostIntegrationSpecSpec extends Specification {
 
     void "test where query from posts" (){
         given:"a user "
-        User u
+        WillsUser u
 
         when: "create a post for user "
-        User.withNewSession { session ->
-            u = new User(username: 'will2')
+        WillsUser.withNewSession { session ->
+            u = new WillsUser(username: 'will2')
             u.save(flush: true, failOnError: true)
             Post p1 = new Post(comments: [food: "bought coffee and cake "])
             Post p2 = new Post(comments: [dinner: "bought wine and dinner"])
@@ -118,7 +118,7 @@ class PostIntegrationSpecSpec extends Specification {
         def postList
         def ratedPostList
         //create new session and use whey query from post to user avoiding N+1
-        User.withNewSession { session ->
+        WillsUser.withNewSession { session ->
 
             postList = Post.where {user.username == "will2"}.list()
             assert postList

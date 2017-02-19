@@ -7,10 +7,10 @@ import java.util.concurrent.ConcurrentHashMap
 
 @Transactional
 @Log
-class UserPostsService {
+class WillsUserPostsService {
 
     def getPostsForUser(username) {
-        User u = User.findByUsernameLike (username)
+        WillsUser u = WillsUser.findByUsernameLike (username)
         assert u
 
         return u.posts
@@ -18,7 +18,7 @@ class UserPostsService {
     }
 
     //single comments entry using tag, and value
-    def createUserPost (User user, tag, value, StarRating starRating = StarRating.None, String description = null) {
+    def createUserPost (WillsUser user, tag, value, StarRating starRating = StarRating.None, String description = null) {
         assert tag
         assert value
         if (!user.id) {
@@ -37,7 +37,7 @@ class UserPostsService {
     }
 
     //comments map may have 0..m comment entries
-    def createUserPost (User user, Map comments, StarRating starRating = StarRating.None, String description = null) {
+    def createUserPost (WillsUser user, Map comments, StarRating starRating = StarRating.None, String description = null) {
         assert comments instanceof Map
         if (!user.id) {
             log.debug "user $user has not been saved yet"
@@ -53,7 +53,7 @@ class UserPostsService {
         return newPost
     }
 
-    def createUserPost (User user, Post post) {
+    def createUserPost (WillsUser user, Post post) {
         if (!user.id) {
             log.debug "user $user has not been saved yet"
             return null

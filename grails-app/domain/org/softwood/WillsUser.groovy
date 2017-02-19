@@ -3,16 +3,16 @@ package org.softwood
 
 import java.time.LocalDate
 
-class User implements Serializable {
+class WillsUser implements Serializable {
 
     String username
     String password
     LocalDate dateCreated
     LocalDate lastUpdated
     Collection posts
-    UserProfile profile
+    WillsUserProfile profile
 
-    static hasOne =[profile:UserProfile]
+    static hasOne =[profile:WillsUserProfile]
     static hasMany = [posts:Post]
 
     static constraints = {

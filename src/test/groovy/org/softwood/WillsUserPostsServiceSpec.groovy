@@ -7,9 +7,9 @@ import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
-@TestFor(UserPostsService)
-@Mock ([User,Post, Rating])
-class UserPostsServiceSpec extends Specification {
+@TestFor(WillsUserPostsService)
+@Mock ([WillsUser,Post, Rating])
+class WillsUserPostsServiceSpec extends Specification {
 
     def setup() {
     }
@@ -19,7 +19,7 @@ class UserPostsServiceSpec extends Specification {
 
     void "get posts for user with username X"() {
         given:"create user - then test the service "
-            User u = new User (username:'testuser')
+            WillsUser u = new WillsUser (username:'testuser')
             assert u.save(flush:true)
             u.posts = []       //have to assign a collection here as starts null
             assert u.posts.size() == 0
@@ -41,7 +41,7 @@ class UserPostsServiceSpec extends Specification {
 
     void "create new user post"() {
         given : "a new user"
-            User u = new User (username:'testuser')
+            WillsUser u = new WillsUser (username:'testuser')
             assert u.save(flush:true)
             u.posts = []       //have to assign a collection here as starts null
             assert u.posts.size() == 0
@@ -60,9 +60,9 @@ class UserPostsServiceSpec extends Specification {
         given : "a new user, and initial post"
         Post p1
         Post p2
-        User u
-        User.withNewSession { session ->
-            u = new User (username:'testuser')
+        WillsUser u
+        WillsUser.withNewSession { session ->
+            u = new WillsUser (username:'testuser')
             assert u.save(flush:true)
             u.posts = []       //have to assign a collection here as starts null
             assert u.posts.size() == 0
@@ -107,9 +107,9 @@ class UserPostsServiceSpec extends Specification {
     void "create new user post and update post rating "() {
         given : "a new user, and initial post"
         Post p
-        User u
-        User.withNewSession { session ->
-            u = new User (username:'testuser')
+        WillsUser u
+        WillsUser.withNewSession { session ->
+            u = new WillsUser (username:'testuser')
             assert u.save(flush:true)
             u.posts = []       //have to assign a collection here as starts null
             assert u.posts.size() == 0

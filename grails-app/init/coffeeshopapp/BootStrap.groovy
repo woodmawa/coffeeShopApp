@@ -23,10 +23,10 @@ class BootStrap {
 
     def loadTestData() {
 
-        UserProfile up = new UserProfile (fullname:"will woodman",
+        WillsUserProfile up = new WillsUserProfile (fullname:"will woodman",
                 nickname:"wiggy",
                 emailAddress:"will.woodman@btinternet.com")
-        User u = new User (username:"bootstrapWill", profile:up)
+        WillsUser u = new WillsUser (username:"bootstrapWill", profile:up)
         if (u.validate()) {
             u.save(flush:true, failOnError:true)
             println "saved user u, with username Will"

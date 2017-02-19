@@ -7,9 +7,9 @@ import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
-@TestFor(UserService)
-@Mock ([User, UserProfile, Post])
-class UserServiceSpec extends Specification {
+@TestFor(WillsUserService)
+@Mock ([WillsUser, WillsUserProfile, Post])
+class WillsUserServiceSpec extends Specification {
 
     def setup() {
     }
@@ -18,26 +18,26 @@ class UserServiceSpec extends Specification {
     }
 
     void "get user by name "() {
-        User user
+        WillsUser user
         def res1
         def res2
         def res3
 
         given :"set of new user "
-            User.withNewSession {session ->
-                user = new User (username: 'testuser')
+            WillsUser.withNewSession { session ->
+                user = new WillsUser (username: 'testuser')
                 user.save (flush:true, failOnError:true)
             }
-            println "user stored in new session was ${User.list()}"
+            println "user stored in new session was ${WillsUser.list()}"
             assert user.id == 1
             assert user.username == 'testuser'
-            assert User.count() == 1
+            assert WillsUser.count() == 1
 
 
         when: "get a user by a username string "
-            User.withNewSession { session ->
-                assert User.count() == 1
-                user = User.get(1)
+            WillsUser.withNewSession { session ->
+                assert WillsUser.count() == 1
+                user = WillsUser.get(1)
                 println "did get for user in new session found $user"
                 res1 = service.getUserByName('test')  //defaults to non exact match
                 assert res1
