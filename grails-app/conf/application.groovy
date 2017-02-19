@@ -4,6 +4,8 @@
 
 
 // Added by the Spring Security Core plugin:
+// TODO keep simple for now and revise later, and add form to post to /logout
+grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.softwood.security.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.softwood.security.UserRole'
 grails.plugin.springsecurity.authority.className = 'org.softwood.security.Role'

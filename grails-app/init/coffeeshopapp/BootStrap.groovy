@@ -1,10 +1,16 @@
 package coffeeshopapp
 
 import org.softwood.*
+import org.softwood.security.Role
+import org.softwood.security.User
 
 class BootStrap {
 
     def init = { servletContext ->
+        if (Post.list().size() == 0 ) {
+
+        }
+
         environments{
             development{
                 if (Post.list().size() == 0 )
@@ -21,7 +27,28 @@ class BootStrap {
     def destroy = {
     }
 
+    def loadSecurityUserAndRoles () {
+        def adminRole = new Role(authority: 'ROLE_ADMIN').save()
+        def userRole = new Role(authority: 'ROLE_USER').save()
+
+        def testUser = new User(username: 'me', password: 'password').save()
+
+        UserRole.create testUser, adminRole
+
+        UserRole.withSession {
+            it.flush()
+            it.clear()
+        }
+
+        assert User.count() == 1
+        assert Role.count() == 2
+        assert UserRole.count() == 1
+
+    }
+
     def loadTestData() {
+
+
 
         WillsUserProfile up = new WillsUserProfile (fullname:"will woodman",
                 nickname:"wiggy",
