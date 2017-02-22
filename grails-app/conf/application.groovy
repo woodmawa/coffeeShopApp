@@ -2,9 +2,9 @@
  * Created by will on 13/02/2017.
  */
 
-//added to avoid login screens for dbconsole
-grails.plugin.springsecurity.rejectIfNoRule = false
-grails.plugin.springsecurity.fii.rejectPublicInvocations = false
+//added to avoid login screens for dbconsole.  if you add /** at end it works
+grails.plugin.springsecurity.rejectIfNoRule = true
+//grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.softwood.security.User'
@@ -18,6 +18,8 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/index',          access: ['permitAll']],
 	[pattern: '/index.gsp',      access: ['permitAll']],
 	[pattern: '/shutdown',       access: ['permitAll']],
+	[pattern: '/dbconsole/**',   access: ['permitAll']],    //added
+	[pattern: '/console/**',     access: ['permitAll']],	//added
 	[pattern: '/assets/**',      access: ['permitAll']],
 	[pattern: '/**/js/**',       access: ['permitAll']],
 	[pattern: '/**/css/**',      access: ['permitAll']],

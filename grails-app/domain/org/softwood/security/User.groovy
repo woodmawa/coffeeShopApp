@@ -19,9 +19,10 @@ class User implements Serializable {
 	boolean passwordExpired
 
     //TODO - should this be transative to roles via groups ?
-	Set<UserGroup> getAuthorities() {
+	Set<Role> getAuthorities() {
 		//UserUserGroupBroken.findAllByUser(this)*.userGroup
-        UserToUserGroup.findAllByUser(this)*.group
+        Set<UserGroup> groups = UserToUserGroup.findAllByUser(this)*.group
+        groups.collect{it.getAuthorities() }
 	}
 
     Set<UserGroup> getUserGroups() {

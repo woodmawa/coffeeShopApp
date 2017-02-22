@@ -45,51 +45,28 @@ class BootStrap {
         UserToUserGroup saved = uug.save(flush:true)
         UserToUserGroup.create (testUser, adminGroup) */
 
-        UserToUserGroup su2g = UserToUserGroup.create (testUser, adminGroup, true)
-        if (su2g.hasErrors()){
-            su2g.errors.each {println "error : $it"}
-        }
-
-        def auth = testUser.getAuthorities()
-        println "testuser authorities returned $auth "
-
 
         UserGroupToRole sgr = UserGroupToRole.create(adminGroup, adminRole)
-        if (sgr.hasErrors()){
-            sgr.errors.each {println "error : $it"}
-        }
+        sgr = UserGroupToRole.create(adminGroup, userRole)
 
-        assert UserGroupToRole.count() == 1
+        assert UserGroupToRole.count() == 2
 
         def auth2 = adminGroup.getAuthorities()
         println "adminGroup authorities returned $auth2 "
 
-        //UserUserGroupBroken.create(testUser, adminGroup)
+        UserToUserGroup su2g = UserToUserGroup.create (testUser, adminGroup, true)
 
-        /*UserUserGroupBroken.withNewSession { session ->
-            UserUserGroupBroken.create(testUser, adminGroup)
-            session.flush()
-            session.clear()
-        }*/
+        def auth = testUser.getAuthorities()
+        assert auth.collect{it.authority}.sort() == ['ROLE_ADMIN', 'ROLE_USER']
 
-        /*UserGroupRoleBroken.create(adminGroup, adminRole)
-        UserGroupRoleBroken.withSession {
-            it.flush()
-            it.clear()
-        }*/
-
-        //UserRole.create (testUser, adminRole)
-
-        /*UserRole.withSession {
-            it.flush()
-            it.clear()
-        }*/
+        def groups = testUser.getUserGroups()
+        assert groups.collect{it.name}.sort() == ['GROUP_ADMIN']
 
         assert UserGroup.count() == 1
         assert User.count() == 1
         assert Role.count() == 2
-        //assert UserUserGroupBroken.count() == 1
-        //assert UserGroupRoleBroken.count() == 1
+        assert UserToUserGroup.count() == 1
+        assert UserGroupToRole.count() == 2
 
     }
 
