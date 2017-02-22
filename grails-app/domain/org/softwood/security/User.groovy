@@ -18,15 +18,17 @@ class User implements Serializable {
 	boolean accountLocked
 	boolean passwordExpired
 
-	//added
-	UserProfile profile
-	static hasOne = [profile: UserProfile]
-
-	Set<Role> getAuthorities() {
-		UserRole.findAllByUser(this)*.role
+    //TODO - should this be transative to roles via groups ?
+	Set<UserGroup> getAuthorities() {
+		//UserUserGroupBroken.findAllByUser(this)*.userGroup
+        UserToUserGroup.findAllByUser(this)*.group
 	}
 
-	def beforeInsert() {
+    Set<UserGroup> getUserGroups() {
+        UserToUserGroup.findAllByUser(this)*.group
+    }
+
+    def beforeInsert() {
 		encodePassword()
 	}
 
@@ -44,8 +46,7 @@ class User implements Serializable {
 
 	static constraints = {
 		password blank: false, password: true
-		username blank: false, unique: true, size:4..30
-		profile  nullable:true, unique:true
+		username blank: false, unique: true
 	}
 
 	static mapping = {

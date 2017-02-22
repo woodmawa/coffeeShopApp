@@ -2,13 +2,16 @@
  * Created by will on 13/02/2017.
  */
 
+//added to avoid login screens for dbconsole
+grails.plugin.springsecurity.rejectIfNoRule = false
+grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 
 // Added by the Spring Security Core plugin:
-// TODO keep simple for now and revise later, and add form to post to /logout
-grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.softwood.security.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.softwood.security.UserRole'
 grails.plugin.springsecurity.authority.className = 'org.softwood.security.Role'
+grails.plugin.springsecurity.authority.groupAuthorityNameField = 'authorities'
+grails.plugin.springsecurity.useRoleGroups = true
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],

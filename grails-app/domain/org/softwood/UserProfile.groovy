@@ -1,6 +1,4 @@
-package org.softwood.security
-
-import org.softwood.security.User
+package org.softwood
 
 
 class UserProfile implements Serializable {
@@ -15,8 +13,8 @@ class UserProfile implements Serializable {
     String timezone
     byte[] picture
 
-    //bidirectional one-one cascade controlled by WillsUser
-    static belongsTo = [user:User]
+    //TODO need to update in line with spring security
+    //static belongsTo = [user:User]
 
     static constraints = {
         fullname        blank:false
