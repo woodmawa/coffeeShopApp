@@ -8,7 +8,7 @@ grails.plugin.springsecurity.rejectIfNoRule = true
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.softwood.security.User'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.softwood.security.UserRole'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.softwood.security.UserToRole'
 grails.plugin.springsecurity.authority.className = 'org.softwood.security.Role'
 grails.plugin.springsecurity.authority.groupAuthorityNameField = 'authorities'
 grails.plugin.springsecurity.useRoleGroups = true

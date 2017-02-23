@@ -5,17 +5,20 @@ import groovy.transform.ToString
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 
+import java.time.LocalDateTime
+
 @ToString(cache=true, includeNames=true, includePackage=false)
-class UserRole implements Serializable {
+class UserToRole implements Serializable {
 
 	private static final long serialVersionUID = 1
 
 	User user
 	Role role
+    LocalDateTime dateCreated
 
 	@Override
 	boolean equals(other) {
-		if (other instanceof UserRole) {
+		if (other instanceof UserToRole) {
 			other.userId == user?.id && other.roleId == role?.id
 		}
 	}
@@ -28,7 +31,7 @@ class UserRole implements Serializable {
 		builder.toHashCode()
 	}
 
-	static UserRole get(long userId, long roleId) {
+	static UserToRole get(long userId, long roleId) {
 		criteriaFor(userId, roleId).get()
 	}
 
@@ -37,37 +40,37 @@ class UserRole implements Serializable {
 	}
 
 	private static DetachedCriteria criteriaFor(long userId, long roleId) {
-		UserRole.where {
+		UserToRole.where {
 			user == User.load(userId) &&
 			role == Role.load(roleId)
 		}
 	}
 
-	static UserRole create(User user, Role role) {
-		def instance = new UserRole(user: user, role: role)
-		instance.save()
+	static UserToRole create(User user, Role role, Boolean flush = false) {
+		def instance = new UserToRole(user: user, role: role)
+		instance.save(flush:flush)
 		instance
 	}
 
 	static boolean remove(User u, Role r) {
 		if (u != null && r != null) {
-			UserRole.where { user == u && role == r }.deleteAll()
+			UserToRole.where { user == u && role == r }.deleteAll()
 		}
 	}
 
 	static int removeAll(User u) {
-		u == null ? 0 : UserRole.where { user == u }.deleteAll()
+		u == null ? 0 : UserToRole.where { user == u }.deleteAll()
 	}
 
 	static int removeAll(Role r) {
-		r == null ? 0 : UserRole.where { role == r }.deleteAll()
+		r == null ? 0 : UserToRole.where { role == r }.deleteAll()
 	}
 
 	static constraints = {
-		role validator: { Role r, UserRole ur ->
+		role validator: { Role r, UserToRole ur ->
 			if (ur.user?.id) {
-				UserRole.withNewSession {
-					if (UserRole.exists(ur.user.id, r.id)) {
+				UserToRole.withNewSession {
+					if (UserToRole.exists(ur.user.id, r.id)) {
 						return ['userRole.exists']
 					}
 				}
@@ -78,5 +81,7 @@ class UserRole implements Serializable {
 	static mapping = {
 		id composite: ['user', 'role']
 		version false
+		cache true
+
 	}
 }

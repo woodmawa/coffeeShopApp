@@ -18,7 +18,6 @@ class UserGroupToRole implements Serializable {
     UserGroup userGroup
     Role role
     LocalDateTime dateCreated
-    LocalDateTime lastUpdated
 
     static constraints = {
         userGroup blank: false /*, validator: { UserGroup ug, UserToUserGroup ug2r ->

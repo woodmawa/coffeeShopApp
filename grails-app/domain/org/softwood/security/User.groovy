@@ -20,9 +20,15 @@ class User implements Serializable {
 
     //TODO - should this be transative to roles via groups ?
 	Set<Role> getAuthorities() {
-		//UserUserGroupBroken.findAllByUser(this)*.userGroup
+        //orig UserUserGroupBroken.findAllByUser(this)*.userGroup
+
+		Set<Role> individualRoles = UserToRole.findAllByUser(this)*.role
         Set<UserGroup> groups = UserToUserGroup.findAllByUser(this)*.group
-        groups.collect{it.getAuthorities() }
+        Set<Role> groupRoles = groups.collect{it.getAuthorities() }
+        Set<Role> aggregateRoles = new HashSet()
+        aggregateRoles.addAll (groupRoles.flatten())
+        aggregateRoles.addAll (individualRoles.flatten())
+        aggregateRoles
 	}
 
     Set<UserGroup> getUserGroups() {

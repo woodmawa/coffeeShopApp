@@ -5,6 +5,7 @@ import org.softwood.security.Role
 import org.softwood.security.User
 import org.softwood.security.UserGroup
 import org.softwood.security.UserGroupToRole
+import org.softwood.security.UserToRole
 import org.softwood.security.UserToUserGroup
 
 class BootStrap {
@@ -35,17 +36,12 @@ class BootStrap {
 
         Role adminRole = new Role(authority: 'ROLE_ADMIN').save(failOnError:true)
         Role userRole = new Role(authority: 'ROLE_USER').save(failOnError:true)
+        Role xtraRole = new Role(authority: 'ROLE_XTRA').save(failOnError:true)
         UserGroup adminGroup = new UserGroup (name:"GROUP_ADMIN").save(failOnError:true)
 
         def testUser = new User(username: 'will', password: 'password').save(failOnError:true)
 
-        /*UserToUserGroup uug = new UserToUserGroup()
-        uug.user = testUser
-        uug.group = adminGroup
-        UserToUserGroup saved = uug.save(flush:true)
-        UserToUserGroup.create (testUser, adminGroup) */
-
-
+        //give adminGroup admin and user roles
         UserGroupToRole sgr = UserGroupToRole.create(adminGroup, adminRole)
         sgr = UserGroupToRole.create(adminGroup, userRole)
 
@@ -54,19 +50,26 @@ class BootStrap {
         def auth2 = adminGroup.getAuthorities()
         println "adminGroup authorities returned $auth2 "
 
+        //assign test user to adminGroup, inherit all its roles
         UserToUserGroup su2g = UserToUserGroup.create (testUser, adminGroup, true)
 
+        //assign individual 'xtra' role to user
+        UserToRole sxtra = UserToRole.create(testUser, xtraRole, true)
+        assert UserToRole.count() == 1
+
         def auth = testUser.getAuthorities()
-        assert auth.collect{it.authority}.sort() == ['ROLE_ADMIN', 'ROLE_USER']
+        assert auth.collect{it.authority}.sort() == ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_XTRA']
+        println "testuser authorities returned $auth "
 
         def groups = testUser.getUserGroups()
         assert groups.collect{it.name}.sort() == ['GROUP_ADMIN']
 
         assert UserGroup.count() == 1
         assert User.count() == 1
-        assert Role.count() == 2
+        assert Role.count() == 3
         assert UserToUserGroup.count() == 1
         assert UserGroupToRole.count() == 2
+        assert UserToRole.count() == 1
 
     }
 
