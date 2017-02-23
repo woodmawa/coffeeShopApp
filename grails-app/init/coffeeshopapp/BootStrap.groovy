@@ -38,37 +38,49 @@ class BootStrap {
         Role userRole = new Role(authority: 'ROLE_USER').save(failOnError:true)
         Role xtraRole = new Role(authority: 'ROLE_XTRA').save(failOnError:true)
         UserGroup adminGroup = new UserGroup (name:"GROUP_ADMIN").save(failOnError:true)
+        UserGroup userGroup = new UserGroup (name:"GROUP_USERS").save(failOnError:true)
 
-        def testUser = new User(username: 'will', password: 'password').save(failOnError:true)
+        User userWill = new User(username: 'will', password: 'password').save(failOnError:true)
+        User userMaz = new User(username: 'maz', password: 'password').save(failOnError:true)
+        User userMeg = new User(username: 'meg', password: 'password').save(failOnError:true)
 
         //give adminGroup admin and user roles
         UserGroupToRole sgr = UserGroupToRole.create(adminGroup, adminRole)
         sgr = UserGroupToRole.create(adminGroup, userRole)
 
-        assert UserGroupToRole.count() == 2
+        sgr = UserGroupToRole.create(userGroup, userRole)
+
+        assert UserGroupToRole.count() == 3
 
         def auth2 = adminGroup.getAuthorities()
         println "adminGroup authorities returned $auth2 "
 
-        //assign test user to adminGroup, inherit all its roles
-        UserToUserGroup su2g = UserToUserGroup.create (testUser, adminGroup, true)
+        //assign test user to adminGroup, and maz+meg to user group, inherit all group roles
+        UserToUserGroup su2g = UserToUserGroup.create (userWill, adminGroup, true)
+        su2g = UserToUserGroup.create (userMaz, userGroup, true)
+        su2g = UserToUserGroup.create (userMeg, userGroup, true)
 
         //assign individual 'xtra' role to user
-        UserToRole sxtra = UserToRole.create(testUser, xtraRole, true)
+        UserToRole sxtra = UserToRole.create(userWill, xtraRole, true)
         assert UserToRole.count() == 1
 
-        def auth = testUser.getAuthorities()
+        def auth = userWill.getAuthorities()
         assert auth.collect{it.authority}.sort() == ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_XTRA']
-        println "testuser authorities returned $auth "
+        println "userWill authorities returned $auth "
 
-        def groups = testUser.getUserGroups()
+        def mazAuth = userMaz.getAuthorities()
+        def megAuth = userMeg.getAuthorities()
+        println "user authorities returned maz: '$mazAuth', and meg: '$megAuth' "
+
+
+        def groups = userWill.getUserGroups()
         assert groups.collect{it.name}.sort() == ['GROUP_ADMIN']
 
-        assert UserGroup.count() == 1
-        assert User.count() == 1
+        assert UserGroup.count() == 2
+        assert User.count() == 3
         assert Role.count() == 3
-        assert UserToUserGroup.count() == 1
-        assert UserGroupToRole.count() == 2
+        assert UserToUserGroup.count() == 3
+        assert UserGroupToRole.count() == 3
         assert UserToRole.count() == 1
 
     }
