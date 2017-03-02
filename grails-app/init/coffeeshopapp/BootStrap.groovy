@@ -5,7 +5,7 @@ import org.softwood.security.Role
 import org.softwood.security.User
 import org.softwood.security.UserGroup
 import org.softwood.security.UserGroupToRole
-import org.softwood.security.UserToRole
+
 import org.softwood.security.UserToUserGroup
 
 class BootStrap {
@@ -45,10 +45,10 @@ class BootStrap {
         User userMeg = new User(username: 'meg', password: 'password').save(failOnError:true)
 
         //give adminGroup admin and user roles
-        UserGroupToRole sgr = UserGroupToRole.create(adminGroup, adminRole)
-        sgr = UserGroupToRole.create(adminGroup, userRole)
+        UserGroupToRole sugr = UserGroupToRole.create(adminGroup, adminRole, true)
+        sugr = UserGroupToRole.create(adminGroup, userRole, true)
 
-        sgr = UserGroupToRole.create(userGroup, userRole)
+        sugr = UserGroupToRole.create(userGroup, userRole, true)
 
         assert UserGroupToRole.count() == 3
 
@@ -56,32 +56,23 @@ class BootStrap {
         println "adminGroup authorities returned $auth2 "
 
         //assign test user to adminGroup, and maz+meg to user group, inherit all group roles
-        UserToUserGroup su2g = UserToUserGroup.create (userWill, adminGroup, true)
-        su2g = UserToUserGroup.create (userMaz, userGroup, true)
-        su2g = UserToUserGroup.create (userMeg, userGroup, true)
-
-        //assign individual 'xtra' role to user
-        UserToRole sxtra = UserToRole.create(userWill, xtraRole, true)
-        assert UserToRole.count() == 1
+        UserToUserGroup su2ug = UserToUserGroup.create (userWill, adminGroup, true)
+        su2ug = UserToUserGroup.create (userMaz, userGroup, true)
+        su2ug = UserToUserGroup.create (userMeg, userGroup, true)
 
         def auth = userWill.getAuthorities()
-        assert auth.collect{it.authority}.sort() == ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_XTRA']
-        println "userWill authorities returned $auth "
+        println "userWill (group) authorities returned $auth "
 
-        def mazAuth = userMaz.getAuthorities()
-        def megAuth = userMeg.getAuthorities()
+        def mazAuth = userMaz.authorities
+        def megAuth = userMeg.authorities
         println "user authorities returned maz: '$mazAuth', and meg: '$megAuth' "
 
-
-        def groups = userWill.getUserGroups()
-        assert groups.collect{it.name}.sort() == ['GROUP_ADMIN']
 
         assert UserGroup.count() == 2
         assert User.count() == 3
         assert Role.count() == 3
         assert UserToUserGroup.count() == 3
         assert UserGroupToRole.count() == 3
-        assert UserToRole.count() == 1
 
     }
 

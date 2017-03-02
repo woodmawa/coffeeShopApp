@@ -11,7 +11,7 @@ grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.softwood.security.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.softwood.security.UserToUserGroup'
 grails.plugin.springsecurity.authority.className = 'org.softwood.security.Role'
-grails.plugin.springsecurity.authority.groupAuthorityNameField = 'authorities' //'authority'
+grails.plugin.springsecurity.authority.groupAuthorityNameField = 'authorities'
 grails.plugin.springsecurity.useRoleGroups = true
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],

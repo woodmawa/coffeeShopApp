@@ -20,17 +20,16 @@ class UserGroupToRole implements Serializable {
     LocalDateTime dateCreated
 
     static constraints = {
-        userGroup blank: false /*, validator: { UserGroup ug, UserToUserGroup ug2r ->
-            if (r.role?.id) {
-                UserToUserGroup.withNewSession {
-                    if (UserToUserGroup.exists(ug.id, ug2r.role.id)) {
+        role blank: false, validator: { Role r, UserGroupToRole ug2r ->
+            if (ug2r.role?.id) {
+                UserGroupToRole.withNewSession {
+                    if (UserGroupToRole.exists(ug2r.userGroup.id, r.id)) {
                         return ['role.exists']
                     }
                 }
             }
-        }*/
+        }
 
-        role blank: false
     }
 
     @Override
@@ -63,7 +62,7 @@ class UserGroupToRole implements Serializable {
         }
     }
 
-    static UserGroupToRole create(UserGroup group, Role role, boolean flush = true) {
+    static UserGroupToRole create(UserGroup group, Role role, boolean flush = false) {
         def ug2r = new UserGroupToRole(userGroup: group, role: role)
         ug2r.save(flush:flush)
         ug2r

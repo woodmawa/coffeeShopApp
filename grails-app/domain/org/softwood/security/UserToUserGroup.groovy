@@ -20,17 +20,15 @@ class UserToUserGroup implements Serializable {
     LocalDateTime dateCreated
 
     static constraints = {
-        user blank: false /*, validator: { User u, UserToUserGroup ug ->
-            if (ug.group?.id) {
+        user blank: false , validator: { User u, UserToUserGroup u2ug ->
+            if (u2ug.group?.id) {
                 UserToUserGroup.withNewSession {
-                    if (UserToUserGroup.exists(u.id, ug.group.id)) {
+                    if (UserToUserGroup.exists(u.id, u2ug.group.id)) {
                         return ['userGroup.exists']
                     }
                 }
             }
-        }*/
-
-        group blank: false
+        }
     }
 
     @Override
@@ -63,10 +61,10 @@ class UserToUserGroup implements Serializable {
         }
     }
 
-    static UserToUserGroup create(User user, UserGroup group, boolean flush = true) {
-        def u2g = new UserToUserGroup(user: user, group: group)
-        u2g.save(flush:flush)
-        u2g
+    static UserToUserGroup create(User user, UserGroup group, boolean flush = false) {
+        def u2ug = new UserToUserGroup(user: user, group: group)
+        u2ug.save(flush:flush)
+        u2ug
     }
 
     static boolean remove(User u, UserGroup g) {
