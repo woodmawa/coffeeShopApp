@@ -9,7 +9,6 @@ grails.plugin.springsecurity.securityConfigType = "Annotation"
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.softwood.security.User'
-grails.plugin.springsecurity.userLookup.authoritiesPropertyName = 'authorities'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.softwood.security.UserToUserGroup'
 grails.plugin.springsecurity.authority.className = 'org.softwood.security.Role'
 grails.plugin.springsecurity.authority.groupAuthorityNameField = 'authorities' //'authority'
