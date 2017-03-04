@@ -1,7 +1,11 @@
 package org.softwood
 
+import grails.rest.Resource
+
 import java.time.LocalDateTime
 
+//adds default json and xml rest endpoints
+@Resource (uri="/posts")
 class Post implements Serializable {
 
     Map comments
