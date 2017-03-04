@@ -6,6 +6,7 @@
 grails.plugin.springsecurity.rejectIfNoRule = true
 //grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 grails.plugin.springsecurity.securityConfigType = "Annotation"
+grails.plugin.springsecurity.useSecurityEventListener = true	//enable security events
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.softwood.security.User'
@@ -21,8 +22,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/shutdown',       access: ['permitAll']],
 	[pattern: '/dbconsole/**',   access: ['permitAll']],    //added
 	[pattern: '/console/**',     access: ['permitAll']],	//added
-		[pattern: '/secureTest/secure',    access: ['ROLE_ADMIN']],
-        [pattern: '/secureTest/index',     access: ['permitAll']],
+		[pattern: '/secureTest/secure',    		access: ['ROLE_ADMIN']],
+        [pattern: '/secureTest/index',     		access: ['permitAll']],
+		[pattern: '/secureTest/willsPage',     	access: ["authentication.name == 'will'"]],
 	[pattern: '/assets/**',      access: ['permitAll']],
 	[pattern: '/**/js/**',       access: ['permitAll']],
 	[pattern: '/**/css/**',      access: ['permitAll']],

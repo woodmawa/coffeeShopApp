@@ -13,4 +13,9 @@ class SecureTestController {
         render "hello Will you passed the ROLE_ADMIN"
 
     }
+
+    @Secured("authentication.name == 'will'")
+    def willsPage() {
+        render "just got be will "
+    }
 }
