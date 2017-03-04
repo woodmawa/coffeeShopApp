@@ -24,6 +24,7 @@ class CoffeeShopAppSecurityEventListener implements ApplicationListener {
 
     void onApplicationEvent (ApplicationEvent  event ) {
 
+        //just process the security events
         switch (event.getClass()) {
             case AuthenticationSuccessEvent:
                 log.debug "authentication success " + event.asType(AuthenticationSuccessEvent).authentication
@@ -56,6 +57,7 @@ class CoffeeShopAppSecurityEventListener implements ApplicationListener {
                 log.debug "authentication service failure    " + event.asType(AuthenticationFailureServiceExceptionEvent).authentication
                 break
             default:
+                //ignore other events
                 break
         }
    }
