@@ -6,7 +6,7 @@ import org.softwood.security.User
 import java.time.LocalDateTime
 
 //adds default json and xml rest endpoints
-@Resource (uri="/api/posts")
+//now using restController : @Resource (uri="/api/posts")
 class Post implements Serializable {
 
     Map comments

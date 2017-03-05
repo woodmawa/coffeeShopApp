@@ -83,14 +83,14 @@ class BootStrap {
 
     }
 
-    def loadTestData() {
+    static def loadTestData() {
 
-        /*
+
 
         UserProfile up = new UserProfile (fullname:"will woodman",
                 nickname:"wiggy",
                 emailAddress:"will.woodman@btinternet.com")
-        WillsUser u = new WillsUser (username:"bootstrapWill", profile:up)
+        User u = new User (username:"bootstrapWill", password: "password", profile:up)
         if (u.validate()) {
             u.save(flush:true, failOnError:true)
             println "saved user u, with username ${u.username}"
@@ -105,16 +105,16 @@ class BootStrap {
             v.save (flush:true, failOnError:true)
             println "saved venue v, as home"
         }
-        Post p1 = new Post(comment: [food: "bought coffee and cake "], venue:v)
-        Post p2 = new Post(comment: [dinner: "bought wine and dinner"], venue:v)
-        Post p3 = new Post(comment: [view: "spectacular view of lake and sunset"], venue:v, rating:new Rating (stars: StarRating.FiveStar))
-        Post p4 = new Post(comment: [random: "have a nice day"], rating:new Rating (stars: StarRating.OneStar))
+        Post p1 = new Post(comment: [food: "bought coffee and cake "], venue:v, description : "A first post" )
+        Post p2 = new Post(comment: [dinner: "bought wine and dinner"], venue:v, description : "A second post")
+        Post p3 = new Post(comment: [view: "spectacular view of lake and sunset"], venue:v, rating:new Rating (stars: StarRating.FiveStar), description : "just off for a coffee")
+        Post p4 = new Post(comment: [random: "have a nice day"], rating:new Rating (stars: StarRating.OneStar), description : "feeling so much better")
         u.addToPosts (p1)
         u.addToPosts (p2)
         u.addToPosts (p3)
         u.addToPosts (p4)
         u.save (flush:true, failOnError:true)
-        */
+
 
     }
 }
