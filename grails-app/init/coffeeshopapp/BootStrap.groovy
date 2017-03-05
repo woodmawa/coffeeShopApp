@@ -7,6 +7,7 @@ import org.softwood.security.UserGroup
 import org.softwood.security.UserGroupToRole
 
 import org.softwood.security.UserToUserGroup
+import org.softwood.security.UserProfile
 
 class BootStrap {
 
@@ -67,6 +68,12 @@ class BootStrap {
         def megAuth = userMeg.authorities
         println "user authorities returned maz: '$mazAuth', and meg: '$megAuth' "
 
+        Post post = new Post (comments : [view: 'lovely'], user: userWill)
+        userWill.addToPosts (post)
+
+        post.save (flush:true)
+        if (post.hasErrors())
+            println "post save failed with errors $post.errors"
 
         assert UserGroup.count() == 2
         assert User.count() == 3
@@ -80,7 +87,7 @@ class BootStrap {
 
 
 
-        WillsUserProfile up = new WillsUserProfile (fullname:"will woodman",
+        UserProfile up = new UserProfile (fullname:"will woodman",
                 nickname:"wiggy",
                 emailAddress:"will.woodman@btinternet.com")
         WillsUser u = new WillsUser (username:"bootstrapWill", profile:up)

@@ -3,10 +3,14 @@
  */
 
 //added to avoid login screens for dbconsole.  if you add /** at end it works
-grails.plugin.springsecurity.rejectIfNoRule = true
-//grails.plugin.springsecurity.fii.rejectPublicInvocations = false
+grails.plugin.springsecurity.rejectIfNoRule = false//true
+grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.useSecurityEventListener = true	//enable security events
+
+//Rest
+//grails.plugin.springsecurity.useBasicAuth = true
+//grails.plugin.springsecurity.basic.realName = "coffeeShopApp"
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.softwood.security.User'
@@ -38,6 +42,15 @@ grails.plugin.springsecurity.filterChain.chainMap = [
 	[pattern: '/**/css/**',      filters: 'none'],
 	[pattern: '/**/images/**',   filters: 'none'],
 	[pattern: '/**/favicon.ico', filters: 'none'],
-	[pattern: '/**',             filters: 'JOINED_FILTERS']
+    [pattern: '/api/**',         filters: 'JOINED_FILTERS,' +
+            '-anonymousAuthenticationFilter,' +
+            '-exceptionTranslationFilter,' +
+            '-authenticationProcessingFilter,' +
+            '-securityContextPersistenceFilter,' +
+            '-rememberMeAuthenticationFilter'],
+
+    [pattern: '/**',             filters: 'JOINED_FILTERS,' +
+            '-basicAuthenticationFeature,' +
+            '-basicExceptionTranslationFilter']
 ]
 

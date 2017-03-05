@@ -2,6 +2,9 @@ package org.softwood.security
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
+import org.softwood.Post
+
+import java.time.LocalDate
 
 @EqualsAndHashCode(includes='username')
 @ToString(includes='username', includeNames=true, includePackage=false)
@@ -18,7 +21,17 @@ class User implements Serializable {
 	boolean accountLocked
 	boolean passwordExpired
 
-    //TODO - should this be transative to roles via groups ?
+	//added stuff
+	LocalDate dateCreated
+	LocalDate lastUpdated
+	Collection posts
+	UserProfile profile
+
+	static hasOne =[profile:UserProfile]
+	static hasMany = [posts:Post]
+
+
+	//just stick with standard plugin model - its safer
 	Set<UserGroup> getAuthorities() {
         UserToUserGroup.findAllByUser(this)*.group
 	}
@@ -43,9 +56,33 @@ class User implements Serializable {
 	static constraints = {
 		password blank: false, password: true
 		username blank: false, unique: true
+
+		//added stuff
+		posts    nullable:true
+		profile  nullable:true, unique:true
+
 	}
 
 	static mapping = {
 		password column: '`password`'
+
+		//added stuff
+		sort "username" //default sort on username
+		//when querying posts via from Users define the sort oder for the posts Collection via relationship
+		//name the collection, field to sort by on that entity, and the order
+		posts sort: 'dateCreated', order:'desc'
+
+	}
+
+	boolean isTransient () {
+		if (id == null)
+			true
+		else
+			false
+	}
+
+	String toString() {
+		def state = (isTransient()) ? "transient" : "persisted"
+		"$username[$state]"
 	}
 }

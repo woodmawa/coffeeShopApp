@@ -1,5 +1,7 @@
 package org.softwood
 
+import org.softwood.security.User
+
 
 class UserProfile implements Serializable {
 

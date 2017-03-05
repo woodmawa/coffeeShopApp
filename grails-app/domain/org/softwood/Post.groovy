@@ -1,15 +1,16 @@
 package org.softwood
 
 import grails.rest.Resource
+import org.softwood.security.User
 
 import java.time.LocalDateTime
 
 //adds default json and xml rest endpoints
-@Resource (uri="/posts")
+@Resource (uri="/api/posts")
 class Post implements Serializable {
 
     Map comments
-    WillsUser user
+    User user
     Venue venue
     String description
     Rating rating       //should this be an enum?
@@ -17,7 +18,7 @@ class Post implements Serializable {
     LocalDateTime dateCreated
     LocalDateTime lastUpdated
 
-    static belongsTo = [user:WillsUser]
+    static belongsTo = [user:User]
     static hasOne = [rating:Rating]
 
     static constraints = {

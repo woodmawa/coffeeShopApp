@@ -1,7 +1,9 @@
-package org.softwood
+package org.softwood.security
+
+import org.softwood.security.User
 
 
-class WillsUserProfile implements Serializable {
+class UserProfile implements Serializable {
 
     String fullname
     String nickname
@@ -13,8 +15,8 @@ class WillsUserProfile implements Serializable {
     String timezone
     byte[] picture
 
-    //bidirectional one-one cascade controlled by WillsUser
-    static belongsTo = [user:WillsUser]
+    //bidirectional one-one cascade controlled by User
+    static belongsTo = [user:User]
 
     static constraints = {
         fullname        blank:false

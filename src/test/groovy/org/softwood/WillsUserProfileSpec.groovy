@@ -1,12 +1,13 @@
 package org.softwood
 
 import grails.test.mixin.TestFor
+import org.softwood.security.UserProfile
 import spock.lang.Specification
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-@TestFor(WillsUserProfile)
+@TestFor(UserProfile)
 class WillsUserProfileSpec extends Specification {
 
     def setup() {

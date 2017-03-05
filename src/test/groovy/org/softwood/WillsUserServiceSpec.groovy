@@ -2,13 +2,14 @@ package org.softwood
 
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
+import org.softwood.security.UserProfile
 import spock.lang.Specification
 
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
 @TestFor(WillsUserService)
-@Mock ([WillsUser, WillsUserProfile, Post])
+@Mock ([WillsUser, UserProfile, Post])
 class WillsUserServiceSpec extends Specification {
 
     def setup() {

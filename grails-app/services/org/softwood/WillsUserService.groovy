@@ -1,6 +1,7 @@
 package org.softwood
 
 import grails.transaction.Transactional
+import org.softwood.security.UserProfile
 
 @Transactional
 class WillsUserService {
@@ -41,7 +42,7 @@ class WillsUserService {
         }
 
         if (!user.profile) {
-            WillsUserProfile profile = new WillsUserProfile (bindingProfile)
+            UserProfile profile = new UserProfile (bindingProfile)
             user.addToProfile(profile)
         }
         else {
