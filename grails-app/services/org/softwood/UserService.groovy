@@ -1,30 +1,31 @@
 package org.softwood
 
 import grails.transaction.Transactional
+import org.softwood.security.User
 import org.softwood.security.UserProfile
 
 @Transactional
-class WillsUserService {
+class UserService {
 
     //TODO all security role/model stuff to do properly
     def getUserByName(String username, exactMatch=false) {
-        WillsUser u
+        User u
         if (!exactMatch)
-            u = WillsUser.findByUsernameLike ("%$username%")
+            u = User.findByUsernameLike ("%$username%")
         else
-            u = WillsUser.findByUsername (username)
+            u = User.findByUsername (username)
 
         return u
     }
 
 
-    def resetUserPassword (WillsUser user, password) {
+    def resetUserPassword (User user, password) {
         if (!user.isAttached) {
             user.attach()
         }
 
         //TODO dont do this for real - redo when security model is applied
-        user.password = password
+        //user.password = password
 
         if (user.validate()) {
             user.save (failOnError:true )
@@ -34,7 +35,7 @@ class WillsUserService {
 
     }
 
-    def updateUserProfile (WillsUser user, Map bindingProfile){
+    def updateUserProfile (User user, Map bindingProfile){
         assert bindingProfile
 
         if (!user.isAttached) {

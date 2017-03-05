@@ -85,7 +85,7 @@ class BootStrap {
 
     def loadTestData() {
 
-
+        /*
 
         UserProfile up = new UserProfile (fullname:"will woodman",
                 nickname:"wiggy",
@@ -114,6 +114,7 @@ class BootStrap {
         u.addToPosts (p3)
         u.addToPosts (p4)
         u.save (flush:true, failOnError:true)
+        */
 
     }
 }

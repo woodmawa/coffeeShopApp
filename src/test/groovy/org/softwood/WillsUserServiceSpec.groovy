@@ -8,7 +8,7 @@ import spock.lang.Specification
 /**
  * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
  */
-@TestFor(WillsUserService)
+@TestFor(UserService)
 @Mock ([WillsUser, UserProfile, Post])
 class WillsUserServiceSpec extends Specification {
 

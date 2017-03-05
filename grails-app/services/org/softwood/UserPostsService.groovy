@@ -2,15 +2,16 @@ package org.softwood
 
 import grails.transaction.Transactional
 import groovy.util.logging.Log
+import org.softwood.security.User
 
 import java.util.concurrent.ConcurrentHashMap
 
 @Transactional
 @Log
-class WillsUserPostsService {
+class UserPostsService {
 
     def getPostsForUser(username) {
-        WillsUser u = WillsUser.findByUsernameLike (username)
+        User u = User.findByUsernameLike (username)
         assert u
 
         return u.posts
@@ -18,7 +19,7 @@ class WillsUserPostsService {
     }
 
     //single comments entry using tag, and value
-    def createUserPost (WillsUser user, tag, value, StarRating starRating = StarRating.None, String description = null) {
+    def createUserPost (User user, tag, value, StarRating starRating = StarRating.None, String description = null) {
         assert tag
         assert value
         if (!user.id) {
@@ -37,7 +38,7 @@ class WillsUserPostsService {
     }
 
     //comments map may have 0..m comment entries
-    def createUserPost (WillsUser user, Map comments, StarRating starRating = StarRating.None, String description = null) {
+    def createUserPost (User user, Map comments, StarRating starRating = StarRating.None, String description = null) {
         assert comments instanceof Map
         if (!user.id) {
             log.debug "user $user has not been saved yet"
@@ -53,7 +54,7 @@ class WillsUserPostsService {
         return newPost
     }
 
-    def createUserPost (WillsUser user, Post post) {
+    def createUserPost (User user, Post post) {
         if (!user.id) {
             log.debug "user $user has not been saved yet"
             return null
