@@ -18,6 +18,7 @@ class BootStrap {
 
         environments{
             development{
+
                 /*if (Post.list().size() == 0 )
                     loadTestData()*/
             }

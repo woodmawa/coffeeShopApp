@@ -5,6 +5,7 @@ class UrlMappings {
     static mappings = {
         //add alternate url mapping for rest based resources
         "/api/posts" (resources : "postRest")
+        "/api/guest/posts" (resources : "postRest")
 
         "/$controller/$action?/$id?(.$format)?"{
             constraints {

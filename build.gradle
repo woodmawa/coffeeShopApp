@@ -34,6 +34,7 @@ dependencyManagement {
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging"
+    compile 'ch.qos.logback:logback-classic:1.2.1'
     compile "org.springframework.boot:spring-boot-autoconfigure"
     compile "org.grails:grails-core"
     compile "org.springframework.boot:spring-boot-starter-actuator"
@@ -58,6 +59,8 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.2.1.RELEASE'
     compile 'org.grails.plugins:spring-security-core:3.1.1'
     compile "org.grails.plugins:spring-security-rest:2.0.0.M2"
+    //compile "org.grails.plugins:spring-security-rest-gorm:2.0.0.M2"  //
+    compile group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.6'
 
 }
 
