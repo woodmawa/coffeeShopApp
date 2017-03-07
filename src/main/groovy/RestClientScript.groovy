@@ -47,13 +47,13 @@ http.request (POST, JSON) { req ->
         tokenType = results.token_type
         username = results.username
 
-        println "apiKey: $apiKey"
     }
     response.'404' = { resp ->
         println 'Not found'
     }
 }
 
+/*
 http = new groovyx.net.http.HTTPBuilder("http://localhost:8080")
 def validateToken = [username:"$username", roles:["ROLE_ADMIN"], token_type: "$tokenType", access_token : "$apiKey" ]
 println "validate using : $validateToken"
@@ -73,7 +73,39 @@ http.request (POST, JSON) { req ->
 
         //println "validate: $results"
     }
-    response.'401' =
+    response.'401' = { resp ->
+        println 'unathorised access to resource /api/validate'
+    }
+    response.'403' = { resp ->
+        println 'forbidden access to resource /api/validate'
+    }
+    response.'404' = { resp ->
+        println 'Not found'
+    }
+}*/
+
+println "retrived new apiKey: $apiKey"
+
+http = new groovyx.net.http.HTTPBuilder("http://localhost:8080")
+http.request (GET, JSON) { req ->
+    uri.path = "/api/posts"
+    headers.'Accept' = 'application/json'
+    headers.'Content-Type' = 'application/json'
+    headers.'Authorization' = "Bearer $apiKey"  //have to include Bearer then the key
+
+    response.success = { HttpResponseDecorator resp, def results ->
+        assert resp.status == 200
+        println "validate response : $resp.statusLine   "
+        //println "length: ${resp.headers.'Content-Length'}"
+
+        println "/api/posts: $results"
+    }
+    response.'401' = { resp ->
+        println 'unathorised access to resource /api/posts'
+    }
+    response.'403' = { resp ->
+        println 'forbidden access to resource /api/posts'
+    }
     response.'404' = { resp ->
         println 'Not found'
     }
