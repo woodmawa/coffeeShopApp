@@ -18,8 +18,8 @@ environments {
 }
 
 //added to avoid login screens for dbconsole.  if you add /** at end it works
-grails.plugin.springsecurity.rejectIfNoRule = false//true
-grails.plugin.springsecurity.fii.rejectPublicInvocations = true
+grails.plugin.springsecurity.rejectIfNoRule = true//false
+grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 grails.plugin.springsecurity.securityConfigType = "Annotation"
 grails.plugin.springsecurity.useSecurityEventListener = true	//enable security events
 
