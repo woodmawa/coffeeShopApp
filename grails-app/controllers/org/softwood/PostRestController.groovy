@@ -26,7 +26,6 @@ class PostRestController extends RestfulController {
 
     def index() {
         List<Post> postList = Post.list([fetch:[user:"join",rating:"join"]])
-        println "postRest:returning index action with model :  $postList"
         respond postList, view:'index'  //trigger the templating engine
     }
 }

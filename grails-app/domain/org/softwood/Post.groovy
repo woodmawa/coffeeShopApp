@@ -13,7 +13,7 @@ class Post implements Serializable {
     User user
     Venue venue
     String description
-    Rating rating       //should this be an enum?
+//    Rating rating       //should this be an enum?
 
     //LocalDateTime dateCreated  //json vieww 1.1.5 cant cope with localDateTime
     //LocalDateTime lastUpdated
@@ -21,14 +21,14 @@ class Post implements Serializable {
     Date lastUpdated
 
     static belongsTo = [user:User]
-    static hasOne = [rating:Rating]
+//    static hasOne = [rating:Rating]
 
     static constraints = {
         venue   nullable:true
         comments nullable:true
         description nullable:true
 
-        rating  nullable:true, lazy:false
+//        rating  nullable:true, lazy:false
     }
 
     static mapping = {
