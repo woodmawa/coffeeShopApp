@@ -14,17 +14,17 @@ model {
 }
 
 //json hal.render(post, [deep:true])
-//json hal.render(post)
-json {
+json hal.render(post)
+/*json {
     hal.links (post)
     comments post?.comments
     description post?.description
-    rating "${post?.rating?.stars}"
+//    rating "${post?.rating?.stars}"
     postedBy "${post?.user.username}"
     //java8 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd")
     //java8 def when = post.dateCreated.format(formatter)
     SimpleDateFormat dateFormatter = new SimpleDateFormat ('yyyy-MMM-dd')
     def when = dateFormatter.format(post.dateCreated)
     created when
-}
+}*/
 
