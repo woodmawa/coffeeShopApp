@@ -6,8 +6,10 @@ class Venue implements Serializable {
 
     String name
     LocalDate dateCreated
-    LocalDate lastVisited
-    LocalDate lastUpdated
+    //LocalDate lastVisited  jsonview 1.1.5 cant handle LocalDateTime
+    //LocalDate lastUpdated
+    Date lastVisited
+    Date lastUpdated
     GeoAddress location
     Collection posts
 

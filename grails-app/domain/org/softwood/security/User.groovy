@@ -22,8 +22,10 @@ class User implements Serializable {
 	boolean passwordExpired
 
 	//added stuff
-	LocalDate dateCreated
-	LocalDate lastUpdated
+	//LocalDate dateCreated  json views 1.1.5 cant handle localDateTime
+	//LocalDate lastUpdated
+	Date dateCreated
+	Date lastUpdated
 	Collection posts
 	UserProfile profile
 
