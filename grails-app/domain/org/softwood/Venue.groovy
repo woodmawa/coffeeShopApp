@@ -11,7 +11,7 @@ class Venue implements Serializable {
     Date lastVisited
     Date lastUpdated
     GeoAddress location
-    Collection posts
+    Collection<Post> posts
 
     static hasMany = [posts:Post]           //but doesn't really own thats with user
     static embedded =['location']

@@ -3,11 +3,12 @@ package org.softwood
 
 import grails.test.mixin.integration.Integration
 import grails.transaction.*
+import org.softwood.security.User
 import spock.lang.*
 
 @Integration
 @Rollback
-class WillsUserIntegrationSpec extends Specification {
+class UserIntegrationSpec extends Specification {
 
     def setup() {
     }
@@ -18,18 +19,18 @@ class WillsUserIntegrationSpec extends Specification {
     void "create user"() {
 
         when: "we create a user and save them"
-            WillsUser u = new WillsUser (username: "will")
+            User u = new User (username: "will", password:"password")
             u.save (flush:true, failOnError:true)
 
         then:"check no errors"
             u.errors.errorCount  == 0
             u.id != 0
-            WillsUser.get (u.id).username == "will"
+            User.get (u.id).username == "will"
     }
 
     void "check basic validations " () {
         given : "new user"
-        WillsUser u = new WillsUser (username:"wil")  //too few chars
+        User u = new User (username:"wi", password:"password")  //too few chars, <3
 
         when: "we validate "
         u.validate()
@@ -41,15 +42,15 @@ class WillsUserIntegrationSpec extends Specification {
     
     void "create two users with same name "() {
         when: "create two users with same username and save them "
-        WillsUser u1 = new WillsUser (username:"will")
+        User u1 = new User (username:"will",password:"password")
         u1.save (flush:true)
-        WillsUser u2 = new WillsUser (username: "will")
+        User u2 = new User (username: "will", password:"password")
         u2.save(flush:true)
 
         then: "second save will fail "
         u1.errors.errorCount == 0
         u1.id != null
-        WillsUser.get (u1.id).username == "will"
+        User.get (u1.id).username == "will"
 
         u2.hasErrors()
         u2.id == null

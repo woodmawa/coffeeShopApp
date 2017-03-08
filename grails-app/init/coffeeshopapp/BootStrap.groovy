@@ -1,5 +1,7 @@
 package coffeeshopapp
 
+import grails.util.Environment
+import grails.util.GrailsUtil
 import org.softwood.*
 import org.softwood.security.Role
 import org.softwood.security.User
@@ -12,17 +14,28 @@ import org.softwood.security.UserProfile
 class BootStrap {
 
     def init = { servletContext ->
-        if (Role.count() == 0 ) {
-            loadSecurityUserAndRoles()
-        }
 
+        println "running with environment set to : " + Environment.current.name
         environments{
             development{
+                if (Role.count() == 0 ) {
+                    println "loading bootstrap data for dev run-app"
+                    loadSecurityUserAndRoles()
+                }
 
-                /*if (Post.list().size() == 0 )
-                    loadTestData()*/
             }
             test {
+                if (Post.list().size() == 0 ) {
+                    println "loading integration test data "
+                    loadTestData()
+                }
+
+            }
+            integrationTest {
+                if (Post.list().size() == 0 ) {
+                    println "loading integration test data "
+                    loadTestData()
+                }
 
             }
             production{
@@ -39,27 +52,33 @@ class BootStrap {
         Role adminRole = new Role(authority: 'ROLE_ADMIN').save(failOnError:true)
         Role userRole = new Role(authority: 'ROLE_USER').save(failOnError:true)
         Role xtraRole = new Role(authority: 'ROLE_XTRA').save(failOnError:true)
+        Role moderatorRole = new Role(authority: 'ROLE_MODERATOR').save(failOnError:true)
         UserGroup adminGroup = new UserGroup (name:"GROUP_ADMIN").save(failOnError:true)
         UserGroup userGroup = new UserGroup (name:"GROUP_USERS").save(failOnError:true)
+        UserGroup moderatorsGroup = new UserGroup (name:"GROUP_MODERATORS").save(failOnError:true)
 
-        User userWill = new User(username: 'will', password: 'password').save(failOnError:true)
-        User userMaz = new User(username: 'maz', password: 'password').save(failOnError:true)
-        User userMeg = new User(username: 'meg', password: 'password').save(failOnError:true)
+        User userWill = new User(username: 'bootstrap-will', password: 'password').save(failOnError:true)
+        User userMaz = new User(username: 'bootstrap-maz', password: 'password').save(failOnError:true)
+        User userMeg = new User(username: 'bootstrap-meg', password: 'password').save(failOnError:true)
 
         //give adminGroup admin and user roles
         UserGroupToRole sugr = UserGroupToRole.create(adminGroup, adminRole, true)
         sugr = UserGroupToRole.create(adminGroup, userRole, true)
+        sugr = UserGroupToRole.create(adminGroup, moderatorRole, true)
 
+        //assign moderatorRole, and userRole for moderators group
+        sugr = UserGroupToRole.create(moderatorsGroup, moderatorRole, true)
+        sugr = UserGroupToRole.create(moderatorsGroup, userRole, true)
+
+        //assign userGroup to userRole
         sugr = UserGroupToRole.create(userGroup, userRole, true)
-
-        assert UserGroupToRole.count() == 3
 
         def auth2 = adminGroup.getAuthorities()
         println "adminGroup authorities returned $auth2 "
 
         //assign test user to adminGroup, and maz+meg to user group, inherit all group roles
         UserToUserGroup su2ug = UserToUserGroup.create (userWill, adminGroup, true)
-        su2ug = UserToUserGroup.create (userMaz, userGroup, true)
+        su2ug = UserToUserGroup.create (userMaz, moderatorsGroup, true)
         su2ug = UserToUserGroup.create (userMeg, userGroup, true)
 
         def auth = userWill.getAuthorities()
@@ -76,11 +95,11 @@ class BootStrap {
         if (post.hasErrors())
             println "post save failed with errors $post.errors"
 
-        assert UserGroup.count() == 2
+        assert UserGroup.count() == 3
         assert User.count() == 3
-        assert Role.count() == 3
+        assert Role.count() == 4
         assert UserToUserGroup.count() == 3
-        assert UserGroupToRole.count() == 3
+        assert UserGroupToRole.count() == 6
 
     }
 
