@@ -80,7 +80,7 @@ class VenueIntegrationSpec extends Specification {
         //try delete
         v.delete (flush:true)
 
-        then : " retrieve temp"
+        then : " retrieve index"
         Venue.GeoAddress.findAll().size() == 0
     }
 }

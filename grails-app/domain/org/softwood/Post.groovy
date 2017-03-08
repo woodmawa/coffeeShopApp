@@ -15,8 +15,10 @@ class Post implements Serializable {
     String description
     Rating rating       //should this be an enum?
 
-    LocalDateTime dateCreated
-    LocalDateTime lastUpdated
+    //LocalDateTime dateCreated  //json vieww 1.1.5 cant cope with localDateTime
+    //LocalDateTime lastUpdated
+    Date dateCreated
+    Date lastUpdated
 
     static belongsTo = [user:User]
     static hasOne = [rating:Rating]

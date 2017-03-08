@@ -99,6 +99,7 @@ http.request (GET, JSON) { req ->
         //println "length: ${resp.headers.'Content-Length'}"
 
         println "\t/api/posts: $results"
+
     }
     response.'401' = { resp ->
         println 'unathorised access to resource /api/posts'

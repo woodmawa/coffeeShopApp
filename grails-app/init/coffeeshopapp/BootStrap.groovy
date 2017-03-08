@@ -69,7 +69,7 @@ class BootStrap {
         def megAuth = userMeg.authorities
         println "user authorities returned maz: '$mazAuth', and meg: '$megAuth' "
 
-        Post post = new Post (comments : [view: 'lovely'], user: userWill)
+        Post post = new Post (comments : [view: 'lovely'], user: userWill, rating: new Rating(stars: StarRating.FiveStar))
         userWill.addToPosts (post)
 
         post.save (flush:true)

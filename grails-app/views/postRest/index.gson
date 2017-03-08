@@ -1,0 +1,12 @@
+
+import org.softwood.Post
+
+//tempgson - gets default list of posts from controller
+
+model {
+    List<Post> postList
+}
+
+//call the template to iterate over the postList to produce the output
+//json g.render(postList)
+json tmpl.post (postList)

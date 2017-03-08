@@ -1,0 +1,30 @@
+import com.fasterxml.jackson.annotation.JsonFormat
+import org.softwood.Post
+
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+
+/**
+ * simple template nothing clever, just
+ * Created by willw on 07/03/2017.
+ */
+
+model {
+    Post post
+}
+
+//json hal.render(post, [deep:true])
+//json hal.render(post)
+json {
+    hal.links (post)
+    comments post?.comments
+    description post?.description
+    rating "${post?.rating?.stars}"
+    postedBy "${post?.user.username}"
+    //java8 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd")
+    //java8 def when = post.dateCreated.format(formatter)
+    SimpleDateFormat dateFormatter = new SimpleDateFormat ('yyyy-MMM-dd')
+    def when = dateFormatter.format(post.dateCreated)
+    created when
+}
+
