@@ -6,11 +6,10 @@ import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import groovy.util.slurpersupport.NodeChild
 import groovy.xml.XmlUtil
+import org.softwood.api.PostRestController
 import spock.lang.Specification
 import org.softwood.security.User
 import org.softwood.security.UserProfile
-import org.softwood.*
-
 
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions

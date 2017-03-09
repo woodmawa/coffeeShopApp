@@ -24,9 +24,6 @@ class UserService {
             user.attach()
         }
 
-        //TODO dont do this for real - redo when security model is applied
-        //user.password = password
-
         if (user.validate()) {
             user.save (failOnError:true )
         }

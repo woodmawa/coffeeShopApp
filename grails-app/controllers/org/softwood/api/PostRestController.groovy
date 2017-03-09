@@ -1,7 +1,8 @@
-package org.softwood
+package org.softwood.api
 
 import grails.plugin.springsecurity.annotation.Secured
 import grails.rest.RestfulController
+import org.softwood.Post
 
 @Secured (closure = {
     assert request
@@ -17,6 +18,8 @@ principal : $principal
 } )
 
 class PostRestController extends RestfulController {
+    static namespace = "api"  //put views in grails-app/views/<ns>/<cntlr name>
+
     static  responseFormats = ["json", "xml"]
 
     //constructor - tells rest controller which domain class to scaffold

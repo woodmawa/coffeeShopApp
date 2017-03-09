@@ -31,7 +31,7 @@ class UserServiceSpec extends Specification {
                 user = new User (username: 'testuser', password:"test")
                 user.save (flush:true, failOnError:true)
             }
-            println "user stored in new session was ${WillsUser.list()}"
+            println "user stored in new session was ${User.list()}"
             assert user.id == 1
             assert user.username == 'testuser'
             assert User.count() == 1
