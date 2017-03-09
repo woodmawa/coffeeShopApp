@@ -40,11 +40,12 @@ pre {
     text-decoration: none;
 }
 .grails-icon img {
-    width: 40px;
+    width: 80px;
 
 }
 .navbar-default, .navbar-static-top {
-    background-color: #4D8618;
+/* grails: #4D8618 */
+    background-color: #6F4E37;
     border: 0px;
 }
 a.navbar-brand {
@@ -112,7 +113,7 @@ a.navbar-brand {
 }
 
 #band {
-    /*grey =#808080*/
+    /*grey =#808080, grails band: #79B94C, didnt work : #A1816C*/
     background: #79B94C  no-repeat 50% 30%;
     height: 400px;
 }

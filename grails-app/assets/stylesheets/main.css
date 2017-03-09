@@ -84,7 +84,8 @@ img {
 }
 
 .footer {
-    background: #48802c;
+/* grails #48802c */
+    background: #4F3A26;
     color: #000;
     clear: both;
     font-size: 0.8em;

@@ -54,6 +54,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 		[pattern: '/api/guest/post/**',     	access: ['permitAll']],
 		[pattern: '/api/**',     				access: ['permitAll']],
 		[pattern: '/api/guest/**',     			access: ['permitAll']],
+		[pattern: '/testBootstrap/**',     		access: ['permitAll']],
 	[pattern: '/assets/**',      access: ['permitAll']],
 	[pattern: '/**/js/**',       access: ['permitAll']],
 	[pattern: '/**/css/**',      access: ['permitAll']],

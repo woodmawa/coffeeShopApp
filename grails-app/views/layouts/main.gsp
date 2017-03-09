@@ -4,13 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>
-        <g:layoutTitle default="Grails"/>
+        <g:layoutTitle default="Coffee Shop App"/>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <asset:stylesheet src="application.css"/>
 
     <g:layoutHead/>
+    <r:layoutResources/>
 </head>
 <body>
 
@@ -25,8 +26,9 @@
                 </button>
                 <a class="navbar-brand" href="/#">
                     <i class="fa grails-icon">
-                        <asset:image src="grails-cupsonly-logo-white.svg"/>
-                    </i> Grails
+                        <!-- src="grails-cupsonly-logo-white.svg" -->
+                        <asset:image src="coffee-and-cake.jpg"/>
+                    </i> Coffee Shop
                 </a>
             </div>
             <div class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">
@@ -38,6 +40,7 @@
     </div>
 
     <g:layoutBody/>
+    <r:layoutResources/>
 
     <div class="footer" role="contentinfo"></div>
 
