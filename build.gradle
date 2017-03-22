@@ -1,4 +1,5 @@
 buildscript {
+
     repositories {
         mavenLocal()
         maven { url "https://repo.grails.org/grails/core" }
@@ -7,9 +8,16 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.6"
         classpath "org.grails.plugins:hibernate5:6.0.7"
-        classpath "org.grails.plugins:views-gradle:1.1.5"  //added view compilation tasks
+        classpath "org.grails.plugins:views-gradle:1.2.0"  //added view compilation tasks
     }
 }
+
+/*ext {
+    //overcome error executing java for gson views compilation
+    grails {
+        pathingJar = true
+    }
+}*/
 
 version "0.1"
 group "coffeeshopapp"
@@ -58,9 +66,9 @@ dependencies {
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     runtime 'org.grails.plugins:grails-console:2.0.8'
     //added this dependency to find refs to events
-    //compile 'org.grails.plugins:grails-java8:1.1.1' - interfere with json views?
-    compile "org.grails.plugins:views-gradle:1.1.5"  //added for json views
-    compile "org.grails.plugins:views-json-templates:1.1.5"  //added for json views
+    compile 'org.grails.plugins:grails-java8:1.2.0' //- interfere with json views?
+    compile "org.grails.plugins:views-gradle:1.2.0"  //added for json views
+    compile "org.grails.plugins:views-json-templates:1.2.0"  //added for json views
     //    compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.2.1.RELEASE'
     compile 'org.grails.plugins:spring-security-core:3.1.1'
     compile "org.grails.plugins:spring-security-rest:2.0.0.M2"
