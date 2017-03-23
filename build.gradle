@@ -67,8 +67,8 @@ dependencies {
     runtime 'org.grails.plugins:grails-console:2.0.8'
     //added this dependency to find refs to events
     compile 'org.grails.plugins:grails-java8:1.2.0' //- interfere with json views?
-    compile "org.grails.plugins:views-gradle:1.2.0"  //added for json views
-    compile "org.grails.plugins:views-json-templates:1.2.0"  //added for json views
+    compile "org.grails.plugins:views-json:1.2.0"  //added for json views
+    compile "org.grails.plugins:views-json-templates:1.2.0"  //added for json geoJson for mongo views
     //    compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.2.1.RELEASE'
     compile 'org.grails.plugins:spring-security-core:3.1.1'
     compile "org.grails.plugins:spring-security-rest:2.0.0.M2"
